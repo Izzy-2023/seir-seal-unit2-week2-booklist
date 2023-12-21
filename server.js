@@ -24,6 +24,14 @@ app.use(express.urlencoded({ extended: true })) // body parser, this is how we g
 // ***************************
 
 // Index - GET render all of the books
+app.get('/books', async (req, res) => {
+    // find all of the books
+    let books = await Book.find({})
+    // render all of the books
+	res.render('index.ejs', {
+        books: books.reverse()
+    })
+})
 
 // New - GET for the form to create a new book
 app.get('/books/new', (req, res) => {
@@ -42,7 +50,7 @@ app.post("/books", async (req, res) => {
     }
 
     let newBook = await Book.create(req.body)
-    res.send(newBook)
+    res.redirect("/books")
 } catch (err) {
 	res.send(err)
 }
