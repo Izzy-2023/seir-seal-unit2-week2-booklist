@@ -56,9 +56,16 @@ app.post("/books", async (req, res) => {
 }
 })
 
-
-
 // Show - GET rendering only one book
+app.get("/books/:id", async (req, res) => {
+    // find a book by _id
+    let foundbook = await Book.findById(req.params.id) // this is the request params object
+
+    // render show.ejs with the foundbook
+    res.render("show.ejs", {
+        book: foundbook
+    })
+})
 
 // ***************************
 // SERVER LISTENER
